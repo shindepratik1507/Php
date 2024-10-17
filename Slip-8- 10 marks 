@@ -55,3 +55,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<a href='index.html'>Go back</a>";
 }
 ?>
+
+
+
+
+//2nd//
+
+
+<?php
+
+if (isset($_POST['submit'])) {
+    $a = $_POST['str'];
+    $b = strrev($a);
+
+    if ($a == $b) {
+        echo "Palindrome";
+    } else {
+        echo "Not a palindrome";
+    }
+}
+?>
+
+<form method="POST" action="">
+    <input type="text" name="str" value="" />
+    <button type="submit" name="submit">Check</button>
+</form>
