@@ -1,0 +1,67 @@
+//Write a menu driven program the following operation on an associative array
+a) Reverse the order of each element’s key-value pair. [Hint: array_flip()]
+b) Traverse the element in an array in random order. [Hint: shuffle()]//
+
+
+
+
+<?php
+// Initialize an associative array
+$associativeArray = [
+    "first" => "Apple",
+    "second" => "Banana",
+    "third" => "Cherry",
+    "fourth" => "Date"
+];
+
+// Function to reverse the order of each element's key-value pair
+function reverseKeyValuePairs($array) {
+    $flippedArray = array_flip($array);
+    return $flippedArray;
+}
+
+// Function to traverse elements in a random order
+function randomTraverse($array) {
+    shuffle($array);
+    return $array;
+}
+
+// Menu-driven program
+do {
+    echo "<h2>Menu</h2>";
+    echo "1. Reverse the order of each element's key-value pair<br>";
+    echo "2. Traverse the elements in a random order<br>";
+    echo "3. Exit<br>";
+    echo "Choose an option (1-3): ";
+
+    // Get user input
+    $choice = intval(trim(fgets(STDIN)));
+
+    switch ($choice) {
+        case 1:
+            // Reverse the key-value pairs
+            $reversedArray = reverseKeyValuePairs($associativeArray);
+            echo "<h3>Reversed Key-Value Pairs:</h3>";
+            foreach ($reversedArray as $key => $value) {
+                echo "$key : $value<br>";
+            }
+            break;
+        case 2:
+            // Traverse the array in random order
+            $randomArray = randomTraverse($associativeArray);
+            echo "<h3>Randomly Traversed Elements:</h3>";
+            foreach ($randomArray as $key => $value) {
+                echo "$key : $value<br>";
+            }
+            break;
+        case 3:
+            echo "Exiting the program. Goodbye!";
+            break;
+        default:
+            echo "Invalid choice. Please try again.";
+    }
+
+    echo "<br>";
+
+} while ($choice != 3);
+?>
