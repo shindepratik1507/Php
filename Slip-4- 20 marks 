@@ -1,0 +1,86 @@
+//Write a PHP script for the following: Design a form to accept two strings. Compare
+the two strings using both methods (= = operator & strcmp function). Append second
+string to the first string. Accept the position from the user; from where the characters from
+the first string are reversed. (Use radio buttons)//
+
+
+
+
+//index.php//
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Comparison and Manipulation</title>
+</head>
+<body>
+    <h1>String Comparison and Manipulation</h1>
+    <form action="process.php" method="POST">
+        <label for="string1">Enter First String:</label><br>
+        <input type="text" id="string1" name="string1" required><br><br>
+
+        <label for="string2">Enter Second String:</label><br>
+        <input type="text" id="string2" name="string2" required><br><br>
+
+        <label for="position">Select Position to Reverse (1-based index):</label><br>
+        <input type="radio" id="pos1" name="position" value="1" checked>
+        <label for="pos1">1</label><br>
+        <input type="radio" id="pos2" name="position" value="2">
+        <label for="pos2">2</label><br>
+        <input type="radio" id="pos3" name="position" value="3">
+        <label for="pos3">3</label><br>
+        <input type="radio" id="pos4" name="position" value="4">
+        <label for="pos4">4</label><br>
+        <input type="radio" id="pos5" name="position" value="5">
+        <label for="pos5">5</label><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+
+
+
+//process.php//
+
+
+
+<?php
+// Get form data
+$string1 = isset($_POST['string1']) ? $_POST['string1'] : '';
+$string2 = isset($_POST['string2']) ? $_POST['string2'] : '';
+$position = isset($_POST['position']) ? intval($_POST['position']) : 1;
+
+// Compare strings using == operator
+$comparison_operator = ($string1 == $string2) ? "equal" : "not equal";
+
+// Compare strings using strcmp function
+$comparison_strcmp = strcmp($string1, $string2);
+if ($comparison_strcmp == 0) {
+    $strcmp_result = "equal";
+} elseif ($comparison_strcmp < 0) {
+    $strcmp_result = "less than";
+} else {
+    $strcmp_result = "greater than";
+}
+
+// Append the second string to the first string
+$combined_string = $string1 . $string2;
+
+// Reverse characters from the specified position
+$reversed_part = substr($string1, $position - 1); // Get the substring to reverse
+$reversed_part = strrev($reversed_part); // Reverse the substring
+$final_string = substr($string1, 0, $position - 1) . $reversed_part; // Combine
+
+// Display results
+echo "<h1>Results</h1>";
+echo "<p>Comparison using == operator: The strings are $comparison_operator.</p>";
+echo "<p>Comparison using strcmp: The first string is $strcmp_result the second string.</p>";
+echo "<p>Combined String: $combined_string</p>";
+echo "<p>String after reversing from position $position: $final_string</p>";
+echo "<br><a href='index.php'>Go Back</a>";
+?>
