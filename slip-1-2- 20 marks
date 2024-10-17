@@ -1,0 +1,82 @@
+<?php
+// Function to merge two associative arrays
+function mergeArrays($array1, $array2) {
+    return array_merge($array1, $array2);
+}
+
+// Function to find the intersection of two associative arrays
+function arrayIntersection($array1, $array2) {
+    return array_intersect_assoc($array1, $array2);
+}
+
+// Function to find the union of two associative arrays
+function arrayUnion($array1, $array2) {
+    return $array1 + $array2;
+}
+
+// Function to find the set difference of two associative arrays
+function setDifference($array1, $array2) {
+    return array_diff_assoc($array1, $array2);
+}
+
+// Display menu to the user
+function displayMenu() {
+    echo "\nMenu:";
+    echo "\n1. Merge arrays";
+    echo "\n2. Intersection of arrays";
+    echo "\n3. Union of arrays";
+    echo "\n4. Set difference of arrays";
+    echo "\n5. Exit";
+    echo "\nEnter your choice (1-5): ";
+}
+
+// Main program logic
+do {
+    displayMenu();
+    $choice = intval(trim(fgets(STDIN)));
+
+    // Sample associative arrays for demonstration
+    $array1 = ['a' => 1, 'b' => 2, 'c' => 3];
+    $array2 = ['b' => 2, 'c' => 4, 'd' => 5];
+
+    switch ($choice) {
+        case 1:
+            // Merge arrays
+            $result = mergeArrays($array1, $array2);
+            echo "Merged array:\n";
+            print_r($result);
+            break;
+
+        case 2:
+            // Intersection of arrays
+            $result = arrayIntersection($array1, $array2);
+            echo "Intersection of arrays:\n";
+            print_r($result);
+            break;
+
+        case 3:
+            // Union of arrays
+            $result = arrayUnion($array1, $array2);
+            echo "Union of arrays:\n";
+            print_r($result);
+            break;
+
+        case 4:
+            // Set difference of arrays (elements in $array1 that are not in $array2)
+            $result = setDifference($array1, $array2);
+            echo "Set difference (Array1 - Array2):\n";
+            print_r($result);
+            break;
+
+        case 5:
+            // Exit the program
+            echo "Exiting the program. Goodbye!";
+            break;
+
+        default:
+            echo "Invalid choice. Please enter a number between 1 and 5.";
+    }
+
+    echo "\n";
+} while ($choice != 5);
+?>
