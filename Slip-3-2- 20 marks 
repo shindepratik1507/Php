@@ -1,0 +1,163 @@
+//
+Q2. Write a PHP script to create a Class shape and its subclass triangle, square and display
+area of the selected shape.( use the concept of Inheritance) . Display menu (use radio
+button)
+a) Triangle
+b) Square
+c) Rectangle
+d) Circle//
+
+
+
+
+//index.php//
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Area Calculator</title>
+</head>
+<body>
+    <h1>Select a Shape to Calculate Area</h1>
+    <form action="calculate.php" method="POST">
+        <label>Select a shape:</label><br>
+        <input type="radio" id="triangle" name="shape" value="triangle" checked>
+        <label for="triangle">Triangle</label><br>
+        
+        <input type="radio" id="square" name="shape" value="square">
+        <label for="square">Square</label><br>
+
+        <input type="radio" id="rectangle" name="shape" value="rectangle">
+        <label for="rectangle">Rectangle</label><br>
+
+        <input type="radio" id="circle" name="shape" value="circle">
+        <label for="circle">Circle</label><br><br>
+
+        <label for="dimension1">Enter Dimension 1:</label><br>
+        <input type="number" id="dimension1" name="dimension1" required><br><br>
+
+        <label for="dimension2">Enter Dimension 2 (if required, else leave empty):</label><br>
+        <input type="number" id="dimension2" name="dimension2"><br><br>
+
+        <input type="submit" value="Calculate Area">
+    </form>
+</body>
+</html>
+
+
+
+calculate.php
+
+
+
+
+<?php
+// Define the base Shape class
+class Shape {
+    public function area() {
+        return 0; // Default area for a generic shape
+    }
+}
+
+// Define a Triangle class that extends Shape
+class Triangle extends Shape {
+    private $base;
+    private $height;
+
+    public function __construct($base, $height) {
+        $this->base = $base;
+        $this->height = $height;
+    }
+
+    // Override the area method to calculate the area of a triangle
+    public function area() {
+        return 0.5 * $this->base * $this->height;
+    }
+}
+
+// Define a Square class that extends Shape
+class Square extends Shape {
+    private $side;
+
+    public function __construct($side) {
+        $this->side = $side;
+    }
+
+    // Override the area method to calculate the area of a square
+    public function area() {
+        return pow($this->side, 2);
+    }
+}
+
+// Define a Rectangle class that extends Shape
+class Rectangle extends Shape {
+    private $length;
+    private $width;
+
+    public function __construct($length, $width) {
+        $this->length = $length;
+        $this->width = $width;
+    }
+
+    // Override the area method to calculate the area of a rectangle
+    public function area() {
+        return $this->length * $this->width;
+    }
+}
+
+// Define a Circle class that extends Shape
+class Circle extends Shape {
+    const PI = 3.1416; // Define constant for PI
+    private $radius;
+
+    public function __construct($radius) {
+        $this->radius = $radius;
+    }
+
+    // Override the area method to calculate the area of a circle
+    public function area() {
+        return self::PI * pow($this->radius, 2);
+    }
+}
+
+// Get the form data
+$shape = $_POST['shape'];
+$dimension1 = isset($_POST['dimension1']) ? floatval($_POST['dimension1']) : 0;
+$dimension2 = isset($_POST['dimension2']) ? floatval($_POST['dimension2']) : 0;
+
+$selected_shape = null;
+$area = 0;
+
+// Determine which shape was selected and instantiate the corresponding class
+switch ($shape) {
+    case 'triangle':
+        $selected_shape = new Triangle($dimension1, $dimension2);
+        break;
+    case 'square':
+        $selected_shape = new Square($dimension1);
+        break;
+    case 'rectangle':
+        $selected_shape = new Rectangle($dimension1, $dimension2);
+        break;
+    case 'circle':
+        $selected_shape = new Circle($dimension1);
+        break;
+    default:
+        echo "Invalid shape selected.";
+        exit;
+}
+
+// Calculate the area of the selected shape
+if ($selected_shape) {
+    $area = $selected_shape->area();
+}
+
+// Display the result
+echo "<h1>Calculated Area</h1>";
+echo "<p>The area of the selected shape is: $area square units</p>";
+echo "<a href='index.php'>Go Back</a>";
+?>
+
