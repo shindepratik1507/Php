@@ -1,0 +1,177 @@
+//Write a AJAX program to fetch information from XML file. The XML file looks like
+this: “cd_catalog.xml” [ Enter at least 10 records inXML file]
+CATALOG>
+<CD>
+<TITLE>
+</TITLE>
+<ARTIST>
+</ARTIST>
+<COUNTRY>
+</COUNTRY>
+<COMPANY>
+</COMPANY>
+<PRICE>
+</PRICE>
+<YEAR>
+</YEAR>
+</CD>
+</CATALOG>//
+
+
+
+
+//cd_catalog.xml//
+
+
+
+<CATALOG>
+    <CD>
+        <TITLE>Empire Burlesque</TITLE>
+        <ARTIST>Bob Dylan</ARTIST>
+        <COUNTRY>USA</COUNTRY>
+        <COMPANY>Columbia</COMPANY>
+        <PRICE>10.90</PRICE>
+        <YEAR>1985</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Hide your heart</TITLE>
+        <ARTIST>Bonnie Tyler</ARTIST>
+        <COUNTRY>UK</COUNTRY>
+        <COMPANY>CBS Records</COMPANY>
+        <PRICE>9.90</PRICE>
+        <YEAR>1988</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Greatest Hits</TITLE>
+        <ARTIST>Dolly Parton</ARTIST>
+        <COUNTRY>USA</COUNTRY>
+        <COMPANY>RCA</COMPANY>
+        <PRICE>9.90</PRICE>
+        <YEAR>1982</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Still Got the Blues</TITLE>
+        <ARTIST>Gary Moore</ARTIST>
+        <COUNTRY>UK</COUNTRY>
+        <COMPANY>Virgin records</COMPANY>
+        <PRICE>10.20</PRICE>
+        <YEAR>1990</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Eros</TITLE>
+        <ARTIST>Eros Ramazzotti</ARTIST>
+        <COUNTRY>EU</COUNTRY>
+        <COMPANY>BMG</COMPANY>
+        <PRICE>9.90</PRICE>
+        <YEAR>1997</YEAR>
+    </CD>
+    <CD>
+        <TITLE>One night only</TITLE>
+        <ARTIST>Bee Gees</ARTIST>
+        <COUNTRY>UK</COUNTRY>
+        <COMPANY>Polydor</COMPANY>
+        <PRICE>10.90</PRICE>
+        <YEAR>1998</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Sylvias Mother</TITLE>
+        <ARTIST>Dr.Hook</ARTIST>
+        <COUNTRY>USA</COUNTRY>
+        <COMPANY>CBS</COMPANY>
+        <PRICE>8.10</PRICE>
+        <YEAR>1973</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Maggie May</TITLE>
+        <ARTIST>Rod Stewart</ARTIST>
+        <COUNTRY>UK</COUNTRY>
+        <COMPANY>Pickwick</COMPANY>
+        <PRICE>8.50</PRICE>
+        <YEAR>1990</YEAR>
+    </CD>
+    <CD>
+        <TITLE>Romanza</TITLE>
+        <ARTIST>Andrea Bocelli</ARTIST>
+        <COUNTRY>EU</COUNTRY>
+        <COMPANY>Polydor</COMPANY>
+        <PRICE>10.80</PRICE>
+        <YEAR>1996</YEAR>
+    </CD>
+    <CD>
+        <TITLE>When a man loves a woman</TITLE>
+        <ARTIST>Percy Sledge</ARTIST>
+        <COUNTRY>USA</COUNTRY>
+        <COMPANY>Atlantic</COMPANY>
+        <PRICE>8.70</PRICE>
+        <YEAR>1987</YEAR>
+    </CD>
+</CATALOG>
+
+
+
+
+//index.html//
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CD Catalog</title>
+    <script>
+        function loadCatalog() {
+            // Create an XMLHttpRequest object
+            var xhttp = new XMLHttpRequest();
+            
+            // Define what happens when the request is successful
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    displayCatalog(this);
+                }
+            };
+            
+            // Open the XML file and send the request
+            xhttp.open("GET", "cd_catalog.xml", true);
+            xhttp.send();
+        }
+
+        // Function to display the CD catalog from the XML
+        function displayCatalog(xml) {
+            var i;
+            var xmlDoc = xml.responseXML;
+            var table = "<tr><th>Title</th><th>Artist</th><th>Country</th><th>Company</th><th>Price</th><th>Year</th></tr>";
+            var cds = xmlDoc.getElementsByTagName("CD");
+
+            // Loop through all CD elements in the XML
+            for (i = 0; i < cds.length; i++) {
+                var title = cds[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue;
+                var artist = cds[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue;
+                var country = cds[i].getElementsByTagName("COUNTRY")[0].childNodes[0].nodeValue;
+                var company = cds[i].getElementsByTagName("COMPANY")[0].childNodes[0].nodeValue;
+                var price = cds[i].getElementsByTagName("PRICE")[0].childNodes[0].nodeValue;
+                var year = cds[i].getElementsByTagName("YEAR")[0].childNodes[0].nodeValue;
+
+                // Append each CD's details to the table
+                table += "<tr><td>" + title + "</td><td>" + artist + "</td><td>" + country + "</td><td>" + company + "</td><td>" + price + "</td><td>" + year + "</td></tr>";
+            }
+            // Insert the table into the HTML
+            document.getElementById("cdCatalog").innerHTML = table;
+        }
+    </script>
+</head>
+<body>
+
+<h1>CD Catalog</h1>
+<!-- Button to load catalog -->
+<button type="button" onclick="loadCatalog()">Load CD Catalog</button>
+
+<!-- Table to display catalog -->
+<table id="cdCatalog" border="1">
+    <!-- Catalog content will be loaded here -->
+</table>
+
+</body>
+</html>
