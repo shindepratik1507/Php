@@ -1,0 +1,57 @@
+//Design a HTML form to accept a string. Write a PHP function that checks whether a
+passed string is a palindrome or not?//
+
+
+//index.html//
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker</title>
+</head>
+<body>
+    <h1>Palindrome Checker</h1>
+    <form method="post" action="palindrome.php">
+        <label for="inputString">Enter a string:</label>
+        <input type="text" id="inputString" name="inputString" required>
+        <input type="submit" value="Check Palindrome">
+    </form>
+</body>
+</html>
+
+
+
+
+//palindrome.php//
+
+<?php
+// Function to check if a string is a palindrome
+function isPalindrome($str) {
+    // Remove spaces and make the string case-insensitive
+    $str = strtolower(str_replace(' ', '', $str));
+
+    // Reverse the string
+    $reversedStr = strrev($str);
+
+    // Check if the original string is equal to the reversed string
+    return $str === $reversedStr;
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $inputString = $_POST['inputString']; // Get the input string from the form
+
+    // Check if the string is a palindrome
+    if (isPalindrome($inputString)) {
+        echo "<h1>Result: '$inputString' is a palindrome!</h1>";
+    } else {
+        echo "<h1>Result: '$inputString' is not a palindrome!</h1>";
+    }
+
+    // Link to go back to the form
+    echo "<a href='index.html'>Go back</a>";
+}
+?>
