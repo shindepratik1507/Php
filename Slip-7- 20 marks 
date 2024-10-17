@@ -1,0 +1,24 @@
+//Declare array. Reverse the order of elements, making the first element last and last
+element first and similarly rearranging other array elements.[Hint : array_reverse()]//
+
+
+
+<?php
+// Declare an array
+$array = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
+
+// Display the original array
+echo "<h2>Original Array:</h2>";
+echo "<pre>";
+print_r($array);
+echo "</pre>";
+
+// Reverse the order of elements in the array using array_reverse()
+$reversedArray = array_reverse($array);
+
+// Display the reversed array
+echo "<h2>Reversed Array:</h2>";
+echo "<pre>";
+print_r($reversedArray);
+echo "</pre>";
+?>
