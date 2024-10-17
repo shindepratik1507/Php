@@ -1,0 +1,73 @@
+//Write PHP script to demonstrate the concept of introspection for examining object.//
+
+
+
+<?php
+// Define a class for demonstration
+class Car {
+    // Properties
+    public $make;
+    public $model;
+    private $year;
+    
+    // Constructor
+    public function __construct($make, $model, $year) {
+        $this->make = $make;
+        $this->model = $model;
+        $this->year = $year;
+    }
+    
+    // Method to get the year of the car
+    public function getYear() {
+        return $this->year;
+    }
+    
+    // Method to display car information
+    public function displayInfo() {
+        return "Car: $this->make $this->model, Year: $this->year";
+    }
+}
+
+// Create an object of the Car class
+$myCar = new Car("Toyota", "Camry", 2021);
+
+// Introspection
+echo "<h1>Introspection Example</h1>";
+
+// Get the class name
+$className = get_class($myCar);
+echo "<strong>Class Name:</strong> $className<br><br>";
+
+// Get properties of the object
+$properties = get_object_vars($myCar);
+echo "<strong>Properties:</strong><br>";
+foreach ($properties as $property => $value) {
+    echo "$property : $value<br>";
+}
+
+// Get methods of the object
+$methods = get_class_methods($myCar);
+echo "<br><strong>Methods:</strong><br>";
+foreach ($methods as $method) {
+    echo "$method<br>";
+}
+
+// Check if the object has a specific method
+$methodToCheck = 'displayInfo';
+if (method_exists($myCar, $methodToCheck)) {
+    echo "<br>The method '$methodToCheck' exists in the class '$className'.<br>";
+} else {
+    echo "<br>The method '$methodToCheck' does not exist in the class '$className'.<br>";
+}
+
+// Check if a property exists in the object
+$propertyToCheck = 'year';
+if (property_exists($myCar, $propertyToCheck)) {
+    echo "The property '$propertyToCheck' exists in the class '$className'.<br>";
+} else {
+    echo "The property '$propertyToCheck' does not exist in the class '$className'.<br>";
+}
+
+// Display car information using a method
+echo "<br><strong>Car Information:</strong> " . $myCar->displayInfo() . "<br>";
+?>
