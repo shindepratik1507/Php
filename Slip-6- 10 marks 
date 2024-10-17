@@ -1,0 +1,30 @@
+//Write a PHP script to check whether accepted number is prime or not//
+
+
+
+<?php
+// Function to check if a number is prime
+function isPrime($number) {
+    // Check if the number is less than 2
+    if ($number < 2) {
+        return false;
+    }
+    // Check for factors from 2 to the square root of the number
+    for ($i = 2; $i <= sqrt($number); $i++) {
+        if ($number % $i == 0) {
+            return false; // Not prime if divisible by any number other than 1 and itself
+        }
+    }
+    return true; // It's a prime number
+}
+
+// Accept user input
+$number = 29; // You can change this number for testing
+
+// Check if the number is prime
+if (isPrime($number)) {
+    echo "$number is a prime number.";
+} else {
+    echo "$number is not a prime number.";
+}
+?>
