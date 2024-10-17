@@ -1,0 +1,38 @@
+//Declare a Multidimensional Array. Display specific element from a Multidimensional
+array. Also delete given element from the Multidimensional array.(After each operation
+display array content.)//
+
+
+
+<?php
+// Declare a multidimensional array
+$multiArray = [
+    "Fruits" => ["Apple", "Banana", "Orange"],
+    "Vegetables" => ["Carrot", "Potato", "Tomato"],
+    "Dairy" => ["Milk", "Cheese", "Butter"]
+];
+
+// Display the original array
+echo "<h2>Original Array:</h2>";
+echo "<pre>";
+print_r($multiArray);
+echo "</pre>";
+
+// Display a specific element from the multidimensional array (e.g., "Potato" from Vegetables)
+$specificElement = $multiArray["Vegetables"][1];
+echo "<h2>Specific Element (Vegetables -> 2nd Element):</h2>";
+echo $specificElement;
+echo "<br><br>";
+
+// Delete a specific element (e.g., delete "Cheese" from Dairy)
+unset($multiArray["Dairy"][1]);
+
+// Re-index the array to avoid gaps after deletion (optional step)
+$multiArray["Dairy"] = array_values($multiArray["Dairy"]);
+
+// Display the array after deletion
+echo "<h2>Array After Deleting 'Cheese' from Dairy:</h2>";
+echo "<pre>";
+print_r($multiArray);
+echo "</pre>";
+?>
