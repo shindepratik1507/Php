@@ -1,0 +1,45 @@
+//Design a HTML form to accept a string. Write a php function to reverse a string//
+
+
+//index.html//
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Reverser</title>
+</head>
+<body>
+    <h1>Reverse a String</h1>
+    <form method="post" action="reverse.php">
+        <label for="inputString">Enter a string:</label>
+        <input type="text" id="inputString" name="inputString" required>
+        <input type="submit" value="Reverse String">
+    </form>
+</body>
+</html>
+
+
+
+//reverse.php//
+
+
+<?php
+// Function to reverse a string
+function reverseString($str) {
+    return strrev($str); // Use strrev() function to reverse the string
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $inputString = $_POST['inputString']; // Get the input string from the form
+    $reversedString = reverseString($inputString); // Reverse the string
+
+    // Display the original and reversed strings
+    echo "<h1>String Reversal Result</h1>";
+    echo "<p>Original String: <strong>$inputString</strong></p>";
+    echo "<p>Reversed String: <strong>$reversedString</strong></p>";
+    echo "<a href='index.html'>Go back</a>"; // Link back to the form
+}
+?>
