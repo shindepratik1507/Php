@@ -1,0 +1,19 @@
+//Write a PHP script to display source code of a webpage//
+
+
+<?php
+// URL of the webpage you want to display the source code of
+$url = "https://www.example.com";
+
+// Use file_get_contents to get the source code
+$source_code = file_get_contents($url);
+
+// Check if fetching the source code was successful
+if ($source_code === FALSE) {
+    echo "Failed to retrieve source code.";
+} else {
+    // Display the source code with special characters converted to HTML entities
+    echo "<h2>Source Code of " . $url . ":</h2>";
+    echo "<pre>" . htmlspecialchars($source_code) . "</pre>";
+}
+?>
