@@ -1,0 +1,91 @@
+//Define a class Employee having private members – id, name, department, salary. Define
+parameterized constructors. Create a subclass called “Manager” with private member bonus.
+Create 3 objects of the Manager class and display the details of the manager having the
+maximum total salary (salary + bonus). //
+
+
+<?php
+// Define the Employee class
+class Employee {
+    // Private members
+    private $id;
+    private $name;
+    private $department;
+    private $salary;
+
+    // Parameterized constructor
+    public function __construct($id, $name, $department, $salary) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->department = $department;
+        $this->salary = $salary;
+    }
+
+    // Getter for salary
+    public function getSalary() {
+        return $this->salary;
+    }
+
+    // Getter for employee details
+    public function getDetails() {
+        return [
+            'ID' => $this->id,
+            'Name' => $this->name,
+            'Department' => $this->department,
+            'Salary' => $this->salary
+        ];
+    }
+}
+
+// Define the Manager class (subclass of Employee)
+class Manager extends Employee {
+    // Private member for bonus
+    private $bonus;
+
+    // Parameterized constructor
+    public function __construct($id, $name, $department, $salary, $bonus) {
+        // Call parent constructor to initialize Employee attributes
+        parent::__construct($id, $name, $department, $salary);
+        $this->bonus = $bonus;
+    }
+
+    // Method to calculate total salary (salary + bonus)
+    public function getTotalSalary() {
+        return $this->getSalary() + $this->bonus;
+    }
+
+    // Override getDetails to include bonus
+    public function getDetails() {
+        $details = parent::getDetails(); // Get details from Employee class
+        $details['Bonus'] = $this->bonus;
+        $details['Total Salary'] = $this->getTotalSalary();
+        return $details;
+    }
+}
+
+// Create 3 Manager objects
+$manager1 = new Manager(1, "Alice", "HR", 50000, 5000);
+$manager2 = new Manager(2, "Bob", "Sales", 60000, 4000);
+$manager3 = new Manager(3, "Charlie", "IT", 55000, 6000);
+
+// Store managers in an array
+$managers = [$manager1, $manager2, $manager3];
+
+// Find the manager with the maximum total salary
+$maxManager = $managers[0];
+
+foreach ($managers as $manager) {
+    if ($manager->getTotalSalary() > $maxManager->getTotalSalary()) {
+        $maxManager = $manager;
+    }
+}
+
+// Display the details of the manager with the maximum total salary
+echo "<h1>Manager with Maximum Total Salary</h1>";
+$details = $maxManager->getDetails();
+echo "<ul>";
+foreach ($details as $key => $value) {
+    echo "<li><strong>$key</strong>: $value</li>";
+}
+echo "</ul>";
+?>
