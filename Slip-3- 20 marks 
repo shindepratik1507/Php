@@ -1,0 +1,93 @@
+//Q2. Write a PHP script for the following: Design a form to accept the details of 5 different
+items, such as item code, item name, units sold, rate. Display the bill in the tabular format.
+Use only 4 text boxes. (Hint : Use of explode function.)//
+
+
+
+//index.php//
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Bill</title>
+</head>
+<body>
+    <h1>Enter Item Details</h1>
+    <form action="bill.php" method="POST">
+        <label for="item_codes">Item Codes (comma-separated):</label><br>
+        <input type="text" id="item_codes" name="item_codes" placeholder="e.g., 101, 102, 103, 104, 105" required><br><br>
+
+        <label for="item_names">Item Names (comma-separated):</label><br>
+        <input type="text" id="item_names" name="item_names" placeholder="e.g., Pen, Book, Pencil, Eraser, Notebook" required><br><br>
+
+        <label for="units_sold">Units Sold (comma-separated):</label><br>
+        <input type="text" id="units_sold" name="units_sold" placeholder="e.g., 5, 10, 3, 7, 2" required><br><br>
+
+        <label for="rate">Rates (comma-separated):</label><br>
+        <input type="text" id="rate" name="rate" placeholder="e.g., 10, 50, 5, 3, 100" required><br><br>
+
+        <input type="submit" value="Generate Bill">
+    </form>
+</body>
+</html>
+
+
+
+//bill.php//
+
+<?php
+// Get form data using POST method
+$item_codes = isset($_POST['item_codes']) ? $_POST['item_codes'] : '';
+$item_names = isset($_POST['item_names']) ? $_POST['item_names'] : '';
+$units_sold = isset($_POST['units_sold']) ? $_POST['units_sold'] : '';
+$rates = isset($_POST['rate']) ? $_POST['rate'] : '';
+
+// Use explode to split the comma-separated values into arrays
+$item_codes_array = explode(',', $item_codes);
+$item_names_array = explode(',', $item_names);
+$units_sold_array = explode(',', $units_sold);
+$rates_array = explode(',', $rates);
+
+// Ensure all arrays have 5 elements
+if (count($item_codes_array) != 5 || count($item_names_array) != 5 || count($units_sold_array) != 5 || count($rates_array) != 5) {
+    echo "Please enter exactly 5 items for each field.";
+    exit;
+}
+
+// Display the bill in a tabular format
+echo "<h1>Itemized Bill</h1>";
+echo "<table border='1' cellpadding='10' cellspacing='0'>";
+echo "<tr><th>Item Code</th><th>Item Name</th><th>Units Sold</th><th>Rate</th><th>Total Cost</th></tr>";
+
+// Calculate the total bill amount
+$total_amount = 0;
+for ($i = 0; $i < 5; $i++) {
+    $item_code = trim($item_codes_array[$i]);
+    $item_name = trim($item_names_array[$i]);
+    $units = intval(trim($units_sold_array[$i]));
+    $rate = floatval(trim($rates_array[$i]));
+    
+    // Calculate total cost for each item
+    $total_cost = $units * $rate;
+    $total_amount += $total_cost;
+
+    // Display the item in the table row
+    echo "<tr>
+            <td>$item_code</td>
+            <td>$item_name</td>
+            <td>$units</td>
+            <td>$$rate</td>
+            <td>$$total_cost</td>
+        </tr>";
+}
+
+echo "<tr>
+        <td colspan='4' style='text-align: right;'><strong>Total Amount</strong></td>
+        <td><strong>$$total_amount</strong></td>
+      </tr>";
+
+echo "</table>";
+echo "<br><a href='index.php'>Go Back</a>";
+?>
