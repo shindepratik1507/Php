@@ -1,0 +1,79 @@
+//index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vowel Counter</title>
+</head>
+<body>
+    <h1>Vowel Counter</h1>
+    <form action="process.php" method="POST">
+        <label for="inputString">Enter a string:</label><br>
+        <input type="text" id="inputString" name="inputString" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+
+
+//process.php
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the input string from the form
+    $inputString = $_POST['inputString'];
+
+    // Function to count the total number of vowels
+    function countVowels($string) {
+        // Define vowels
+        $vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+        $count = 0;
+
+        // Convert the string to an array of characters
+        $characters = str_split($string);
+
+        // Loop through each character and check if it's a vowel
+        foreach ($characters as $char) {
+            if (in_array($char, $vowels)) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+    // Function to show occurrences of each vowel
+    function vowelOccurrences($string) {
+        // Initialize the occurrences array
+        $vowelCount = ['a' => 0, 'e' => 0, 'i' => 0, 'o' => 0, 'u' => 0];
+
+        // Loop through each character in the string
+        foreach (str_split(strtolower($string)) as $char) {
+            if (array_key_exists($char, $vowelCount)) {
+                $vowelCount[$char]++;
+            }
+        }
+
+        return $vowelCount;
+    }
+
+    // Call the functions
+    $totalVowels = countVowels($inputString);
+    $occurrences = vowelOccurrences($inputString);
+
+    // Display the results
+    echo "<h1>Results</h1>";
+    echo "<p>Total number of vowels: $totalVowels</p>";
+    echo "<h2>Vowel occurrences:</h2>";
+    echo "<ul>";
+    foreach ($occurrences as $vowel => $count) {
+        echo "<li>$vowel: $count</li>";
+    }
+    echo "</ul>";
+} else {
+    echo "No input received.";
+}
+?>
