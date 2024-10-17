@@ -1,0 +1,73 @@
+//Write AJAX program to read a text file and print the contents of the file when the user
+clicks on the Print button//
+
+
+//sample.txt//
+
+
+
+Hello, this is a sample text file.
+It contains multiple lines of text.
+This is the third line.
+
+
+
+//readfile.php//
+
+
+
+
+<?php
+// Set the path to the text file
+$file_path = 'sample.txt';
+
+// Check if the file exists
+if (file_exists($file_path)) {
+    // Read the contents of the file
+    $contents = file_get_contents($file_path);
+    echo nl2br(htmlspecialchars($contents)); // Convert newlines to <br> and escape HTML characters
+} else {
+    echo "File not found.";
+}
+?>
+
+
+
+//index.html//
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Read File Example</title>
+    <script>
+        function printFileContents() {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            // Configure it: GET-request for the URL /readfile.php
+            xhr.open('GET', 'readfile.php', true);
+            
+            // Set up the callback function to handle the response
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Display the contents in the div
+                    document.getElementById('fileContents').innerHTML = xhr.responseText;
+                } else {
+                    document.getElementById('fileContents').innerHTML = "Error: " + xhr.status;
+                }
+            };
+            
+            // Send the request
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <h1>Read Text File Using AJAX</h1>
+    <button onclick="printFileContents()">Print</button>
+    <div id="fileContents" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;"></div>
+</body>
+</html>
