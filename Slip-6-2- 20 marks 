@@ -1,0 +1,107 @@
+//Write a AJAX program to search Student name according to the character typed and
+display list using array.//
+
+
+
+//index.html//
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Name Search</title>
+    <script src="students.js"></script>
+</head>
+<body>
+    <h1>Search Student Names</h1>
+    <input type="text" id="search" placeholder="Type a name..." onkeyup="searchStudent()">
+    <ul id="studentList"></ul>
+
+    <script>
+        // This function is defined in students.js
+        function searchStudent() {
+            var query = document.getElementById('search').value;
+            // Call the AJAX function from students.js
+            fetchStudentNames(query);
+        }
+    </script>
+</body>
+</html>
+
+
+
+//search.php//
+
+
+<?php
+// Sample array of student names
+$students = [
+    "Alice",
+    "Bob",
+    "Charlie",
+    "David",
+    "Eve",
+    "Frank",
+    "Grace",
+    "Hannah",
+    "Isaac",
+    "Jack"
+];
+
+// Get the search query
+$query = isset($_GET['query']) ? $_GET['query'] : '';
+
+// Initialize an empty array to store results
+$results = [];
+
+// Search for matching student names
+foreach ($students as $student) {
+    if (stripos($student, $query) !== false) {
+        $results[] = $student;
+    }
+}
+
+// Return the results as a JSON response
+header('Content-Type: application/json');
+echo json_encode($results);
+?>
+
+
+
+
+
+//students.js//
+
+
+
+function fetchStudentNames(query) {
+    // Create an XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+    
+    // Set up the request
+    xhr.open("GET", "search.php?query=" + encodeURIComponent(query), true);
+    
+    // Define what happens on successful data submission
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Parse the JSON response
+            var studentNames = JSON.parse(xhr.responseText);
+            var studentList = document.getElementById('studentList');
+            
+            // Clear the current list
+            studentList.innerHTML = '';
+
+            // Populate the list with the received student names
+            studentNames.forEach(function(name) {
+                var li = document.createElement('li');
+                li.textContent = name;
+                studentList.appendChild(li);
+            });
+        }
+    };
+
+    // Send the request
+    xhr.send();
+}
