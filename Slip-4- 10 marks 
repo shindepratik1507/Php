@@ -1,0 +1,17 @@
+//Write a PHP script to declare three variables and print maximum among them//
+
+
+
+
+<?php
+// Declare three variables
+$num1 = 10;
+$num2 = 25;
+$num3 = 15;
+
+// Find the maximum number using the max() function
+$max_value = max($num1, $num2, $num3);
+
+// Print the maximum value
+echo "The maximum value among $num1, $num2, and $num3 is: $max_value";
+?>
