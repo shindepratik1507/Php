@@ -1,0 +1,4 @@
+<?php
+// This function outputs information about PHP's configuration, version, and installed modules
+phpinfo();
+?>
