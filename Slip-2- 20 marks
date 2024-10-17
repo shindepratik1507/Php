@@ -1,0 +1,90 @@
+//Write a PHP script for the following:
+a) Design a form to accept two numbers from the users.
+b) Give option to choose an arithmetic operation (use Radio Button).
+c) Display the result on next form.
+d) Use concept of default parameter//
+
+
+
+
+//index.php
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arithmetic Operations</title>
+</head>
+<body>
+    <h1>Arithmetic Operations</h1>
+    <form action="process.php" method="POST">
+        <label for="num1">Enter first number:</label><br>
+        <input type="number" id="num1" name="num1" required><br><br>
+
+        <label for="num2">Enter second number:</label><br>
+        <input type="number" id="num2" name="num2" required><br><br>
+
+        <label>Select Operation:</label><br>
+        <input type="radio" id="add" name="operation" value="add" checked>
+        <label for="add">Addition</label><br>
+
+        <input type="radio" id="subtract" name="operation" value="subtract">
+        <label for="subtract">Subtraction</label><br>
+
+        <input type="radio" id="multiply" name="operation" value="multiply">
+        <label for="multiply">Multiplication</label><br>
+
+        <input type="radio" id="divide" name="operation" value="divide">
+        <label for="divide">Division</label><br><br>
+
+        <input type="submit" value="Calculate">
+    </form>
+</body>
+</html>
+
+
+
+//process.php
+
+
+<?php
+// Function to perform arithmetic operations
+function calculate($num1, $num2, $operation = 'add') {
+    switch ($operation) {
+        case 'add':
+            return $num1 + $num2;
+        case 'subtract':
+            return $num1 - $num2;
+        case 'multiply':
+            return $num1 * $num2;
+        case 'divide':
+            // Check if the second number is not zero to avoid division by zero
+            if ($num2 != 0) {
+                return $num1 / $num2;
+            } else {
+                return "Cannot divide by zero.";
+            }
+        default:
+            return "Invalid operation selected.";
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get numbers and operation from form
+    $num1 = $_POST['num1'];
+    $num2 = $_POST['num2'];
+    $operation = $_POST['operation'];
+
+    // Call the calculate function with default parameter
+    $result = calculate($num1, $num2, $operation);
+
+    // Display the result
+    echo "<h1>Result</h1>";
+    echo "<p>The result of the $operation operation is: $result</p>";
+    echo "<a href='index.php'>Go Back</a>";
+} else {
+    echo "No data received.";
+}
+?>
