@@ -1,0 +1,104 @@
+//Sales_order (sonumber, s_order_date)
+a. Client (clientno, name, address)
+b. A client can give one or more sales_orders, but a sales_order belongs to
+exactly one client.
+c. Accept sales order date from the user. Write a PHP script which will display all
+orders which are placed before that date.//
+
+
+//sql//
+
+
+CREATE TABLE Client (
+    clientno INT PRIMARY KEY,
+    name VARCHAR(100),
+    address VARCHAR(255)
+);
+
+CREATE TABLE Sales_order (
+    sonumber INT PRIMARY KEY,
+    s_order_date DATE,
+    clientno INT,
+    FOREIGN KEY (clientno) REFERENCES Client(clientno)
+);
+
+
+
+//php//
+
+<?php
+// Database connection
+$servername = "localhost"; // Database server name
+$username = "root"; // Database username
+$password = ""; // Database password
+$dbname = "sales_db"; // Database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve user input
+    $input_date = $_POST['order_date'];
+
+    // Query to fetch sales orders placed before the given date
+    $sql = "SELECT sonumber, s_order_date, name, address FROM Sales_order 
+            INNER JOIN Client ON Sales_order.clientno = Client.clientno
+            WHERE s_order_date < ?";
+    
+    // Prepare and execute the query
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $input_date);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Display the results
+    if ($result->num_rows > 0) {
+        echo "<h2>Sales Orders before $input_date:</h2>";
+        echo "<table border='1'>
+                <tr>
+                    <th>Order Number</th>
+                    <th>Order Date</th>
+                    <th>Client Name</th>
+                    <th>Client Address</th>
+                </tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                    <td>" . $row['sonumber'] . "</td>
+                    <td>" . $row['s_order_date'] . "</td>
+                    <td>" . $row['name'] . "</td>
+                    <td>" . $row['address'] . "</td>
+                  </tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No orders found before the specified date.";
+    }
+
+    // Close the statement and connection
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Order Search</title>
+</head>
+<body>
+
+<h2>Search Sales Orders by Date</h2>
+<form method="POST" action="">
+    <label for="order_date">Enter Date (YYYY-MM-DD):</label>
+    <input type="date" id="order_date" name="order_date" required>
+    <input type="submit" value="Search">
+</form>
+
+</body>
+</html>
