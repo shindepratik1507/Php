@@ -1,0 +1,23 @@
+Q1. Write a PHP script to display student information on web page.
+
+
+
+
+<?php
+// Define an associative array with student information
+$student_info = [
+    'Name' => 'Yuh-Heng Song',
+    'Age' => 20,
+    'Course' => 'Computer Science',
+    'Year' => '2nd Year',
+    'University' => 'XYZ University'
+];
+
+// Display student information on the web page
+echo "<h1>Student Information</h1>";
+echo "<ul>";
+foreach ($student_info as $key => $value) {
+    echo "<li><strong>$key:</strong> $value</li>";
+}
+echo "</ul>";
+?>
