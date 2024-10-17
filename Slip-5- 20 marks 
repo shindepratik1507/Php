@@ -1,0 +1,60 @@
+Write a menu driven program to perform the following operations on an associative
+array:
+a) Display the elements of an array along with the keys.
+b) Display the size of an array
+
+
+
+
+<?php
+// Initialize an associative array
+$associativeArray = [
+    "name" => "John",
+    "age" => 25,
+    "gender" => "Male",
+    "city" => "New York"
+];
+
+// Function to display array elements with keys
+function displayArray($array) {
+    echo "<h3>Array Elements:</h3>";
+    foreach ($array as $key => $value) {
+        echo "$key : $value<br>";
+    }
+}
+
+// Function to display the size of the array
+function displaySize($array) {
+    $size = count($array);
+    echo "<h3>Size of the array: $size</h3>";
+}
+
+// Menu-driven program
+do {
+    echo "<h2>Menu</h2>";
+    echo "1. Display elements of the array with keys<br>";
+    echo "2. Display size of the array<br>";
+    echo "3. Exit<br>";
+    echo "Choose an option (1-3): ";
+
+    // Get user input
+    $choice = intval(trim(fgets(STDIN)));
+
+    switch ($choice) {
+        case 1:
+            displayArray($associativeArray);
+            break;
+        case 2:
+            displaySize($associativeArray);
+            break;
+        case 3:
+            echo "Exiting the program. Goodbye!";
+            break;
+        default:
+            echo "Invalid choice. Please try again.";
+    }
+
+    echo "<br>";
+
+} while ($choice != 3);
+?>
