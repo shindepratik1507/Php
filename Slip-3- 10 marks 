@@ -1,0 +1,40 @@
+//Q1. Write a PHP script to script to display time table of your class( use HTML table tags in
+echo)//
+
+
+
+<?php
+// Define the timetable data as a multidimensional array
+$timetable = [
+    'Monday' => ['Math', 'Physics', 'Chemistry', 'Computer Science', 'Break', 'English'],
+    'Tuesday' => ['English', 'Math', 'Computer Science', 'Break', 'Physics', 'Chemistry'],
+    'Wednesday' => ['Chemistry', 'Physics', 'Break', 'Math', 'English', 'Computer Science'],
+    'Thursday' => ['Computer Science', 'English', 'Break', 'Physics', 'Math', 'Chemistry'],
+    'Friday' => ['Math', 'English', 'Break', 'Physics', 'Computer Science', 'Chemistry']
+];
+
+// Function to display the timetable as an HTML table
+function displayTimetable($timetable) {
+    echo "<h1>Class Timetable</h1>";
+    echo "<table border='1' cellpadding='10' cellspacing='0'>";
+    echo "<tr><th>Day</th><th>Period 1</th><th>Period 2</th><th>Period 3</th><th>Period 4</th><th>Break</th><th>Period 5</th></tr>";
+
+    // Loop through each day and its schedule
+    foreach ($timetable as $day => $subjects) {
+        echo "<tr>";
+        echo "<td><strong>$day</strong></td>";
+        foreach ($subjects as $subject) {
+            echo "<td>$subject</td>";
+        }
+        echo "</tr>";
+    }
+
+    echo "</table>";
+}
+
+// Call the function to display the timetable
+displayTimetable($timetable);
+?>
+
+
+
